@@ -6,6 +6,7 @@ namespace PasswordGenerator
 {
     /// <summary>
     /// Cross paltform copy to clipboard, adapted from https://stackoverflow.com/questions/44205260/net-core-copy-to-clipboard
+    /// http://www.robvanderwoude.com/escapechars.php
     /// </summary>
     public static class Clipboard
     {
@@ -14,6 +15,13 @@ namespace PasswordGenerator
             string cmd, escapedArgs;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
+                val = val.Replace("%", "%%");
+                val = val.Replace("^", "^^");
+                val = val.Replace("&", "^&");
+                val = val.Replace("<", "^<");
+                val = val.Replace(">", "^>");
+                val = val.Replace("|", "^|");
+
                 cmd = "cmd.exe";
                 escapedArgs = $"echo {val} | clip";
                 escapedArgs = escapedArgs.Replace("\"", "\\\"");
