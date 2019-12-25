@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 
 namespace PasswordGenerator
 {
@@ -13,9 +12,9 @@ namespace PasswordGenerator
             Console.WriteLine("Password Generator");
             bool cont = true;
             string input = string.Empty;
-            int howLong;
             while (cont)
             {
+                int howLong;
                 while (!int.TryParse(input, out howLong))
                 {
                     Console.Write("How long?: ");
@@ -31,7 +30,7 @@ namespace PasswordGenerator
 
                 char[] possible = GetPossibleChars(PasswordChars, include);
 
-                string password = GenratePassword(howLong, possible);
+                string password = GeneratePassword(howLong, possible);
                 Console.WriteLine("Password: {0}", password);
 
                 Clipboard.SetText(password);
@@ -57,14 +56,13 @@ namespace PasswordGenerator
             return possible;
         }
         
-        private static string GenratePassword(int howLong, char[] possible)
+        private static string GeneratePassword(int howLong, char[] possible)
         {
             char[] pass = new char[howLong];
             Random random = new Random();
-            int index;
             for (int i = 0; i < howLong; i++)
             {
-                index = random.Next(0, possible.Length - 1);
+                var index = random.Next(0, possible.Length - 1);
                 pass[i] = possible[index];
             }
             return new string(pass);
